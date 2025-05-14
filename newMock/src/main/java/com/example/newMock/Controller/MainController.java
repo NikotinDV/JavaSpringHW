@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.awt.*;
 import java.math.BigDecimal;
+import java.util.Random;
 
 @RestController
 
@@ -46,6 +47,10 @@ public class MainController {
                 currency = "RUB";
             }
 
+            Random random = new Random();
+            BigDecimal randomBalance = maxLimit.multiply(BigDecimal.valueOf(random.nextDouble()))
+                    .setScale(2, BigDecimal.ROUND_HALF_UP);
+
             ResponseDTO responseDTO = new ResponseDTO();
 
 
@@ -53,7 +58,7 @@ public class MainController {
 //            responseDTO.setClientId(clientId);
 //            responseDTO.setAccount(responseDTO.getAccount());
             responseDTO.setCurrency(currency);
-            responseDTO.setBalance(new BigDecimal(777));
+            responseDTO.setBalance(randomBalance);
             responseDTO.setMaxLimit(maxLimit);
 
             log.error("************ RequestDTO ***********" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
